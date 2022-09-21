@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from quizez.models import Category, Choice, Question, Quiz, Result
+
+admin.site.register([Choice, Result, Question, Category, Quiz])
