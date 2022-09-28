@@ -15,8 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework import routers
+
+from api.views import QuestionDetailView, QuizListView, UserViewSet
+from quizez.models import Question
+
+app_name = "api"
+routes = routers.DefaultRouter()
+routes.register("customers", UserViewSet)
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", include("api.urls")),
+    path("", include(routes.urls)),
+    path("auth/", include("rest_framework.urls")),
+    path("quiz/<int:pk>/question/<int:order>/", QuestionDetailView.as_view(), name="question_detail"),
+    path("quiz/", QuizListView.as_view(), name="quiz_list"),
 ]
