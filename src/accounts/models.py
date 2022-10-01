@@ -53,3 +53,6 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0NjIxMDY3LCJqdGkiOiI3ZmMwY2E1MTYzMmU0NjI5YjFlYjg5OWZhZWI0YWI0NyIsInVzZXJfaWQiOjF9.rviXpi9zqUXsaLYU9L6_uSSa3tcWhhL3isLcZwU8Jx0

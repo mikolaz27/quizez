@@ -1,9 +1,11 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from accounts.models import Customer
 from api.serializers import (CustomerSerializer, QuestionSerializer,
                              QuizSerializer)
+from core.permissions import IsSuperUser
 from quizez.models import Question, Quiz
 
 
@@ -13,7 +15,7 @@ class UserViewSet(ModelViewSet):
 
 
 class QuestionDetailView(RetrieveAPIView):
-    # queryset = Question.objects.all()
+    permission_classes = [IsAuthenticated | IsSuperUser]
     serializer_class = QuestionSerializer
 
     def get_object(self):
@@ -21,6 +23,5 @@ class QuestionDetailView(RetrieveAPIView):
 
 
 class QuizListView(ListAPIView):
-
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
