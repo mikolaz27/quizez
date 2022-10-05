@@ -137,3 +137,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# 1. швидший процес розробки
+# 2. передбачувана поведінка на всіх етапах розробки
+# 3. інкапсуляція + (security)
+# 4. маштабування
+# 5. моніторинг
