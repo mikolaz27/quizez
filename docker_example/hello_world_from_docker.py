@@ -19,3 +19,7 @@ while True:
 
 # docker run --rm -d -p 8010:8008 --name quizez_cont quizez
 # docker build -t quizez .
+
+# docker run --rm -d -p 8010:8008 -v D:\Hillel\quizez\quizez\src:/quizez --name quizez_cont quizez
+
+# docker run --rm -d -p 8010:8008 -v D:\Hillel\quizez\quizez:/quizez --name quizez_cont quizez ./commands/start_server.sh
