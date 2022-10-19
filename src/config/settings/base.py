@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
+from turtle import home
+
+import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -21,6 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-c@16b*5v@c182a-vge^+3*h!-c3=$^6b-rw+@d%+2dnaj-ffia"
 
+mongoengine.connect(
+    host="mongodb://admin:admin@mongodb:27017/mongodb_content?authSource=admin"
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     "quizez",
     "core",
     "api",
+    "mongo_blog"
 ]
 
 MIDDLEWARE = [
@@ -95,8 +102,10 @@ AUTH_USER_MODEL = "accounts.Customer"
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+    "rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated"],
 }
 
 SIMPLE_JWT = {
@@ -121,10 +130,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

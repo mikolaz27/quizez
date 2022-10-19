@@ -6,10 +6,12 @@ services:
     container_name: quizez_container
     working_dir: /quizez
     command:
-      - ./commands/start_server.sh
+      - ./commands/start_server_${MODE}.sh
     ports:
-      - 8010:8008
+      - ${LOCAL_PORT}:${WSGI_PORT}
     volumes:
+      - static_content:/quizez/src/static
+      - media_content:/quizez/src/media
       - ./src:/quizez/src
     env_file:
       - .env
@@ -38,9 +40,48 @@ services:
     depends_on:
       - postgres
 
+  mongodb:
+    image: mongo:3-stretch
+    container_name: mongo_db_container
+    ports:
+      - 27017:27017
+    command: [ "--bind_ip_all", "--smallfiles" ]
+    volumes:
+      - mongo_data:/data/db
+    env_file:
+      - .env
+    restart: always
 
+  mongoadmin:
+    image: mongo-express
+    restart: always
+    container_name: mongo_admin_container
+    ports:
+      - 8091:8081
+    env_file:
+      - .env
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
 
+  nginx:
+    image: nginx:1.19
+    volumes:
+      - static_content:/quizez/src/static
+      - media_content:/quizez/src/media
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - .env
+    depends_on:
+      - backend
 
 volumes:
+  mongo_data: { }
   pg_data: { }
   pgadmin_data: { }
+  static_content: { }
+  media_content: { }
