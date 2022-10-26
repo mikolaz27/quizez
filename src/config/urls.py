@@ -20,4 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("mongo/", include("mongo_blog.urls")),
+    path("quiz/", include("quizez.urls")),
 ]
