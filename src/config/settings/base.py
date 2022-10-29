@@ -14,6 +14,7 @@ from pathlib import Path
 from turtle import home
 
 import mongoengine
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "django_extensions",
+    "django_celery_beat",
     "drf_yasg",
     "accounts",
     "quizez",
@@ -141,3 +143,10 @@ CELERY_RESULT_BACKEND = "redis://redis"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
+
+CELERY_BEAT_SCHEDULE = {
+    "some_periodic_task": {
+        "task": "quizez.tasks.mine_bitcoin",
+        "schedule": crontab(minute="*/2")
+    }
+}
